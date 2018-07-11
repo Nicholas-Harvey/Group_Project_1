@@ -21,7 +21,7 @@ navigator.geolocation.watchPosition(function(position) {
 });
 
 setInterval(function(){
-    console.log(pos);
+    $(".jumbotron").html("<p>" + "Position: " + pos.lat + " , " + pos.lng + "</p>");
 }, 1000);
 
 
