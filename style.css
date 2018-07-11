@@ -1,0 +1,82 @@
+.form-group {
+    width: 50%;
+    margin: 10px;
+}
+
+#googleMap {
+    margin: 10px;
+    float: left;
+    clear: both;
+    width: 60%;
+    height:400px;
+}
+
+.card {
+    width: 30%;
+    height: 400px;
+    margin: 10px;
+    float: left;
+}
+
+.jumbotron {
+    clear: both;
+}
+
+button {
+    margin-left: 10px;
+}
+
+.card-img-top {
+    height: 50px;
+}
+
+.card .card-title {
+    margin: 13px;
+    text-decoration: underline;
+    text-decoration-color: 
+    #6e2f51;
+    text-align: center;
+}
+
+#submit {
+    margin: 10px;
+    text-align: center;
+    letter-spacing: 1.33;
+    padding: 10px;
+    font-size: 25px;
+    color: white;
+}
+
+#button-div {
+    text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+    * {
+        text-align: center;
+    }
+
+    .form-group {
+        width: 90%;
+        margin-top: 10px;
+    }
+
+    #googleMap {
+        width: 90%;
+        float: none;
+    }
+
+    .card {
+        float: none;
+        width: 90%;
+    }
+
+    .jumbotron {
+        clear: both;
+        
+    }
+
+    nav {
+        text-align: center;
+    }
+}

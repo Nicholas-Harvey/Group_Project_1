@@ -1,13 +1,125 @@
 <!DOCTYPE html>
-
 <html>
+  <head>
+    <title>speedtrApp</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">        
 
-<head>
-    <title>Group Project, Nicholas Bernhard branch</title>
-</head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 
-<body>
-    <h1>Nicholas Bernhard branch!</h1>
-</body>
+    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
 
+    <link href="style.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+                <a class="navbar-brand" href="#">speedtrApp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Methodology</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-warning my-2 my-sm-0">Search</button>
+                    </form>
+                </div>
+                </nav>
+
+            <div id="button-div">
+                <button type="button" class="btn bg-dark" id="submit">Report</button>
+            </div>
+
+            <div id="googleMap"></div>
+
+            <script>
+
+                function initMap() {
+
+                    var map = new google.maps.Map(document.getElementById('googleMap'), {
+                    center: {lat: 39.7392, lng: -104.9903},
+                    zoom: 8
+                    });
+
+                    infoWindow = new google.maps.InfoWindow;
+
+                    var marker = new google.maps.Marker({
+                        position: {lat: 39.7392, lng: -104.9903},
+                        map: map, 
+                        title: 'Denver'
+                    });
+
+                    var exampleSpeedTrap = new google.maps.Marker({
+                        position: {lat: 40.1039, lng: -105.1708},
+                        map: map,
+                        title: "ExampleSpeedTrap"
+                    });
+
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            var pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            
+                            infoWindow.setPosition(pos);
+                            infoWindow.setContent('Location found.');
+                            infoWindow.open(map);
+                        }, function() {
+                            handleLocationError(true, infoWindow, map.getCenter());
+                        });
+                    } else {
+                        handleLocationError(false, infoWindow, map.getCenter());
+                    }
+                }
+                
+                function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent(browserHasGeolocation ?              'Error: The Geolocation service failed.' :
+                            'Error: Your browser does not support geolocation.');
+                    infoWindow.open(map);
+                }
+
+        
+            </script>
+
+            <div class="card">
+                <img class="card-img-top" src="http://www.solidbackgrounds.com/images/2048x1536/2048x1536-tomato-solid-color-background.jpg" alt="monocolor background">
+                <h4 class="card-title">Recently Discovered</h4>
+                <p class="card-text">
+                    <ul>
+                        <li>A list</li>
+                        <li>Of recently</li>
+                        <li>Discovered</li>
+                        <li>Hazardous Speed Changes</li>
+                    </ul>
+                </p>
+            </div>
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYzoIRl5Tr3t23pkaQYWe2KVKYO0FE4ck&callback=initMap"
+            async defer></script>
+
+            <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+            <script src="app.js"></script>
+
+    </body>
 </html>
