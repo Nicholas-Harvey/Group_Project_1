@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>speedtrApp</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">        
+    <head>
+        <title>speedtrApp</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">        
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <!--Bootstrap-->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
+        <!--Bootstrap Theme-->
+        <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
 
-    <link href="style.css" rel="stylesheet">
+        <!--Custom CSS-->
+        <link href="style.css" rel="stylesheet">
+
+        <!--Icon CDN-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+        <!--Bootswatch CDN again?-->
+        <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
+
+        <!--Google Fonts link-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     </head>
 
@@ -50,25 +62,29 @@
             <div id="googleMap"></div>
 
             <div class="card">
-                <img class="card-img-top" src="https://www.solidbackgrounds.com/images/2048x1536/2048x1536-tomato-solid-color-background.jpg" alt="monocolor background">
+                <img class="card-img-top" src="http://www.solidbackgrounds.com/images/2048x1536/2048x1536-tomato-solid-color-background.jpg" alt="monocolor background">
                 <h4 class="card-title">Recently Discovered</h4>
                 <p class="card-text">
                     <ul>
-                        <li>A list</li>
-                        <li>Of recently</li>
-                        <li>Discovered</li>
-                        <li>Hazardous Speed Changes</li>
+                        <h5 id="speeding"><i class="fas fa-tachometer-alt"></i></li>
+                        <br>
+                        <h5 id="construction"><i class='fas fa-wrench'></i></li>
+                        <br>
+                        <h5 id="traffic"><i class='fa fa-car'></i></li>
+                        <br>
+                        <h5 id="entering-town"><i class='fas fa-building'></i></li>
+                        <br>
+                        <h5 id="weather"><i class='fas fa-cloud'></i></li>
+                        <br>
                     </ul>
                 </p>
             </div>
-
-            <div class="jumbotron"></div>
 
             <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
-
+            
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
             <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
@@ -77,6 +93,8 @@
 
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYzoIRl5Tr3t23pkaQYWe2KVKYO0FE4ck&callback=initMap&libraries=visualization"
             async defer></script>
+
+            <script>"api.openweathermap.org/data/2.5/forecast?lat=35&lon=139"</script>
 
     </body>
 </html>
