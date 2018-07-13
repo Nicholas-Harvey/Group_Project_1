@@ -1,5 +1,7 @@
 var pos;
 
+var weatherApi;
+
 var config = {
     apiKey: "AIzaSyBJ1wWHUPZJQh97JtOr4UsmKMHSwWqG_kI",
     authDomain: "speedtrapp-5cd38.firebaseapp.com",
@@ -18,8 +20,8 @@ navigator.geolocation.watchPosition(function(position) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
+    weatherApi = "http://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
 });
-
 
 $("#submit").on("click", function(){
     database.ref().push({
@@ -125,3 +127,42 @@ function getPoints() {
 
 console.log(coordList);
 
+navigator.geolocation.watchPosition(function(position) {
+    pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+    weatherApi = "http://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
+
+    $.ajax({
+        url: weatherApi,
+        method: "GET"
+    }).then(function (data) {
+        console.log("City: " + data.name);
+        console.log("Weather Type: " + data.weather[0].main);
+        console.log("Weather Description: " + data.weather[0].description);
+        if(data.weather[0].main === "Rain"){
+            $("#weather").html("<i class='fas fa-cloud'>        Hazardous Weather Predicted Along Your route</i>");
+        }
+        if(data.weather[0].description === "clear sky"){
+            $("#weather").html("<i class='fas fa-cloud'>        Warning! Hail Reported at Your Destination!</i>");
+        
+        }
+    });
+
+    var dangerCoord = {lat: 39.7392, lng:-104.9903};
+    var exampleAlert = {lat: 39.7392, lng:-104.9903};
+
+    console.log(dangerCoord);
+    console.log(exampleAlert);
+
+    if(dangerCoord.lat === exampleAlert.lat && dangerCoord.lng === exampleAlert.lng){
+        console.log("Danger Zone Found Again");
+        // alert("Danger Zone Found Again");
+        $("#speeding").html('<i class="fas fa-tachometer-alt">      A speeding trap has been found at  </i>' +  "  " + dangerCoord.lat + ", " + dangerCoord.lng);
+        $("#construction").html("<i class='fas fa-wrench'>      Construction has been reported on your route at...</i>");
+        $("#traffic").html("<i class='fa fa-car'>   Traffic has been reported on your route at...</i>");
+        $("#entering-town").html("<i class='fas fa-building'>       Be prepared to reduce your speed as you enter town from the highway</i>");
+        $("#weather").html("<i class='fas fa-cloud'></i>");
+    };
+});
