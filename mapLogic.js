@@ -28,37 +28,32 @@ $("#submit").on("click", function(){
     });
 });
 
+var heatmap;
+var map;
+
 function initMap() {
 
-    var map = new google.maps.Map(document.getElementById('googleMap'), {
+    map = new google.maps.Map(document.getElementById('googleMap'), {
         center: {lat: 39.7392, lng: -104.9903},
         zoom: 8
     });
 
+    heatmap = new google.maps.visualization.HeatmapLayer({
+        data: getPoints(),
+        map: map
+    });
+
     infoWindow = new google.maps.InfoWindow;
 
-    var marker = new google.maps.Marker({
-        position: {lat: 39.7392, lng: -104.9903},
-        map: map, 
-        title: 'Denver'
-    });
-
-    var exampleSpeedTrap = new google.maps.Marker({
-        position: {lat: 40.1039, lng: -105.1708},
-        map: map,
-        title: "ExampleSpeedTrap"
-    });
-
-    database.ref().on("child_added", function(snapshot) {
-        var addMarkerLat = snapshot.val().lat;
-        var addMarkerLng = snapshot.val().lng;
-        console.log(addMarkerLat, addMarkerLng);
-        var databaseMarker = new google.maps.Marker({
-            position: {lat: addMarkerLat, lng: addMarkerLng},
-            map: map,
-            title: "Ping"
-        });
-    });
+    // database.ref().on("child_added", function(snapshot) {
+    //     var addMarkerLat = snapshot.val().lat;
+    //     var addMarkerLng = snapshot.val().lng;
+    //     var databaseMarker = new google.maps.Marker({
+    //         position: {lat: addMarkerLat, lng: addMarkerLng},
+    //         map: map,
+    //         title: "Ping"
+    //     });
+    // });
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -66,7 +61,6 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            alert("Geo is enabled.")
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -74,8 +68,35 @@ function initMap() {
 
     } else {
         handleLocationError(false, infoWindow, map.getCenter());
-        alert("geo is not enabled on this device.");
     }
+}
+
+function toggleHeatmap() {
+    heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function changeGradient() {
+    var gradient = [
+      'rgba(0, 255, 255, 0)',
+      'rgba(0, 255, 255, 1)',
+      'rgba(0, 191, 255, 1)',
+      'rgba(0, 127, 255, 1)',
+      'rgba(0, 63, 255, 1)',
+      'rgba(0, 0, 255, 1)',
+      'rgba(0, 0, 223, 1)',
+      'rgba(0, 0, 191, 1)',
+      'rgba(0, 0, 159, 1)',
+      'rgba(0, 0, 127, 1)',
+      'rgba(63, 0, 91, 1)',
+      'rgba(127, 0, 63, 1)',
+      'rgba(191, 0, 31, 1)',
+      'rgba(255, 0, 0, 1)'
+    ]
+    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+}
+
+function changeRadius() {
+    heatmap.set('radius', heatmap.get('radius') ? null : 20);
 }
                 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -83,3 +104,24 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setContent(browserHasGeolocation ?              'Error: The Geolocation service failed.' : 'Error: Your browser does not support geolocation.');
     infoWindow.open(map);
 }
+
+coordList = [];
+
+function gatherCoordinates() {    
+    database.ref().on("child_added", function(results) {
+        var latCoord = results.val().lat;
+        console.log(latCoord);
+        var lngCoord = results.val().lng;
+        var googleMapsCoordPair = new google.maps.LatLng(latCoord, lngCoord);
+        coordList.push(googleMapsCoordPair);
+    });
+}
+
+gatherCoordinates();
+
+function getPoints() {
+    return coordList;
+}
+
+console.log(coordList);
+
