@@ -20,7 +20,7 @@ navigator.geolocation.watchPosition(function(position) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
-    weatherApi = "http://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
+    weatherApi = "https://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
 });
 
 $("#submit").on("click", function(){
@@ -107,12 +107,12 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
-coordList = [];
+var coordList = [];
+
 
 function gatherCoordinates() {    
     database.ref().on("child_added", function(results) {
         var latCoord = results.val().lat;
-        console.log(latCoord);
         var lngCoord = results.val().lng;
         var googleMapsCoordPair = new google.maps.LatLng(latCoord, lngCoord);
         coordList.push(googleMapsCoordPair);
