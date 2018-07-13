@@ -20,7 +20,6 @@ navigator.geolocation.watchPosition(function(position) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
-    weatherApi = "https://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
 });
 
 $("#submit").on("click", function(){
@@ -132,7 +131,7 @@ navigator.geolocation.watchPosition(function(position) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
-    weatherApi = "http://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
+    weatherApi = "https://api.openweathermap.org/data/2.5/weather?lat=" + pos.lat + "&lon=" + pos.lng + "&appid=eedb0cb56348964c7e81f8ffed687249";
 
     $.ajax({
         url: weatherApi,
