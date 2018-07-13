@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- jQuery -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+
+    <button type="button" id="playAlert">PLAY ALERT</button>
+
+    <script>
+    
+        var alertSound = new Audio('assets/audio/167337__willy-ineedthatapp-com__pup-alert.mp3');
+
+        var counter = 0;
+        console.log("counter value is: " + counter);
+
+        function resetCounter() {
+            counter = 0;
+            console.log("resetCounter has been called");
+        }
+
+        function alertCheck() {
+            if (counter === 0) {
+                counter = 1;
+                console.log("Counter value is now: " + counter);
+                alertSound.play();
+                console.log("Alert sound has been played");
+                setTimeout(resetCounter, 60000);
+                console.log("Counter reset timer has been set");
+            } else if (counter === 1) {
+                console.log("Alert is on snooze");
+            }
+        }
+
+        $("#playAlert").on("click", function() {
+            alertCheck();
+        })
+    </script>
+</body>
+
+</html>
