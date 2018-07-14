@@ -161,8 +161,12 @@ database.ref().on("child_added", function(results) {
             }
         }
     }
+
+    var iteration = 0;
     
     setInterval(function () {
+        iteration = iteration+1;
+        console.log("You are on iteration", iteration);
         newValues();
         currentDirection();
         proximityCheck();
