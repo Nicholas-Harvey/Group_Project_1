@@ -10,7 +10,6 @@ database.ref().on("child_added", function(results) {
     coordinateArray.push(coordObject); 
 });
 
-//console.log("logic.js is trying to read:", coordinateArray);
     
     function getLocation() {
     
@@ -167,4 +166,4 @@ database.ref().on("child_added", function(results) {
         newValues();
         currentDirection();
         proximityCheck();
-    }, 10000);
+
