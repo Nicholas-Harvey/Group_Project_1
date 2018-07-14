@@ -10,7 +10,7 @@ database.ref().on("child_added", function(results) {
     coordinateArray.push(coordObject); 
 });
 
-console.log("Logic.js is trying to read:", coordinateArray);
+console.log("logic.js is trying to read:", coordinateArray);
     
     function getLocation() {
     
@@ -61,7 +61,7 @@ console.log("Logic.js is trying to read:", coordinateArray);
     
     $("#playAlert").on("click", function () {
     
-        alert();
+        playAlert();
     
     });
     
@@ -75,7 +75,7 @@ console.log("Logic.js is trying to read:", coordinateArray);
             console.log("resetCounter has been called");
         };
     
-        function alert() {
+        function playAlert() {
             if (counter === 0) {
                     counter = 1;
                     console.log("Counter value is now: " + counter);
@@ -143,21 +143,21 @@ console.log("Logic.js is trying to read:", coordinateArray);
         for (i = 0; i <= coordinateArray.length; i++) {
     
             if ((direction === "north") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
-                alert();
+                playAlert();
             } else if ((direction === "south") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
-                alert();
+                playAlert();
             } else if ((direction === "west") && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
-                alert();
+                playAlert();
             } else if ((direction === "east") && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01))) && (newY === coordinateArray[i].yCoordinate)) {
-                alert();
+                playAlert();
             } else if ((direction === "northeast") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01)))) {
-                alert();
+                playAlert();
             } else if ((direction === "southeast") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01)))) {
-                alert();
+                playAlert();
             } else if ((direction === "southwest") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01)))) {
-                alert();
+                playAlert();
             } else if ((direction === "northwest") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01)))) {
-                alert();
+                playAlert();
             }
     
         }
@@ -168,4 +168,5 @@ console.log("Logic.js is trying to read:", coordinateArray);
         currentDirection();
         proximityCheck();
     }, 10000);
+    
     
