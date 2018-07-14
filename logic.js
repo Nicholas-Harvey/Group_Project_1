@@ -27,8 +27,8 @@ database.ref().on("child_added", function(results) {
     //With map coordinates, the third decimal point measures a distance of 0.068 miles.
     //The functions are called every ten seconds. Therefore, the user must be traveling at least 0.068 miles every ten seconds, or about 24 miles per hour. 
     function showPosition(position) {
-        $("#location").html("Latitude: " + "<span id='xPos'>" + position.coords.latitude.toFixed(3) + "</span>" +
-            "<br>Longitude: " + "<span id='yPos'>" + position.coords.longitude.toFixed(3) + "</span>");
+        $("#location").html("Latitude: " + "<span id='xPos'>" + position.coords.latitude.toFixed(5) + "</span>" +
+            "<br>Longitude: " + "<span id='yPos'>" + position.coords.longitude.toFixed(5) + "</span>");
         //console.log("test");
     };
     
@@ -46,13 +46,13 @@ database.ref().on("child_added", function(results) {
         $("#direction").html("");
     
         oldX = newX;
-        //console.log("oldX is " + oldX);
+        console.log("oldX is " + oldX);
         newX = $("#xPos").html();
-        //console.log("newX is " + newX);
+        console.log("newX is " + newX);
         oldY = newY;
-        //console.log("oldY is " + oldY);
+        console.log("oldY is " + oldY);
         newY = $("#yPos").html();
-        //console.log("newY is " + newY);
+        console.log("newY is " + newY);
     
     };
     
@@ -93,42 +93,42 @@ database.ref().on("child_added", function(results) {
     
     function currentDirection() {
     
-        if ((newX > oldX) && (newY === oldY)) {
+        if ((newX < oldX) && (newY === oldY)) {
             direction = "east";
             $("#direction").html(direction);
-            //console.log(direction);
-        } else if ((newX < oldX) && (newY === oldY)) {
+            console.log(direction);
+        } else if ((newX > oldX) && (newY === oldY)) {
             direction = "west";
             $("#direction").html(direction);
-            //console.log(direction);
+            console.log(direction);
         } else if ((newX === oldX) && (newY > oldY)) {
             direction = "north";
             $("#direction").html(direction);
-            //console.log(direction);
+            console.log(direction);
         } else if ((newX === oldX) && (newY < oldY)) {
             direction = "south";
             $("#direction").html(direction);
-            //console.log(direction);
-        } else if ((newX > oldX) && (newY > oldY)) {
+            console.log(direction);
+        } else if ((newX < oldX) && (newY > oldY)) {
             direction = "northeast";
             $("#direction").html(direction);
-            //console.log(direction);
-        } else if ((newX > oldX) && (newY < oldY)) {
+            console.log(direction);
+        } else if ((newX < oldX) && (newY < oldY)) {
             direction = "southeast";
             $("#direction").html(direction);
-            //console.log(direction);
-        } else if ((newX < oldX) && (newY < oldY)) {
+            console.log(direction);
+        } else if ((newX > oldX) && (newY < oldY)) {
             direction = "southwest";
             $("#direction").html(direction);
-            //console.log(direction);
-        } else if ((newX < oldX) && (newY > oldY)) {
+            console.log(direction);
+        } else if ((newX > oldX) && (newY > oldY)) {
             direction = "northwest";
             $("#direction").html(direction);
-            //console.log(direction);
+            console.log(direction);
         } else {
             direction = "Position has not changed"
             $("#direction").html(direction);
-            //console.log(direction);
+            console.log(direction);
         }
     }
     
@@ -142,24 +142,23 @@ database.ref().on("child_added", function(results) {
     function proximityCheck() {
         for (i = 0; i <= coordinateArray.length; i++) {
     
-            if ((direction === "north") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
+            if ((direction === "north") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.001))) && (newX === coordinateArray[i].xCoordinate)) {
                 playAlert();
-            } else if ((direction === "south") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
+            } else if ((direction === "south") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.001))) && (newX === coordinateArray[i].xCoordinate)) {
                 playAlert();
-            } else if ((direction === "west") && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
+            } else if ((direction === "west") && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.001))) && (newX === coordinateArray[i].xCoordinate)) {
                 playAlert();
-            } else if ((direction === "east") && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01))) && (newY === coordinateArray[i].yCoordinate)) {
+            } else if ((direction === "east") && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.001))) && (newY === coordinateArray[i].yCoordinate)) {
                 playAlert();
-            } else if ((direction === "northeast") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01)))) {
+            } else if ((direction === "northeast") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.001))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.001)))) {
                 playAlert();
-            } else if ((direction === "southeast") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01)))) {
+            } else if ((direction === "southeast") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.001))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.001)))) {
                 playAlert();
-            } else if ((direction === "southwest") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01)))) {
+            } else if ((direction === "southwest") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.001))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.001)))) {
                 playAlert();
-            } else if ((direction === "northwest") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01)))) {
+            } else if ((direction === "northwest") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.001))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.001)))) {
                 playAlert();
             }
-    
         }
     }
     
@@ -167,4 +166,4 @@ database.ref().on("child_added", function(results) {
         newValues();
         currentDirection();
         proximityCheck();
-    }, 10000);
+    }, 3000);
