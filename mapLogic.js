@@ -137,15 +137,19 @@ navigator.geolocation.watchPosition(function(position) {
         url: weatherApi,
         method: "GET"
     }).then(function (data) {
+        console.log("Country: " + data.sys.country);
         console.log("City: " + data.name);
         console.log("Weather Type: " + data.weather[0].main);
         console.log("Weather Description: " + data.weather[0].description);
-        if(data.weather[0].main === "Rain"){
-            $("#weather").html("<i class='fas fa-cloud'>        Hazardous Weather Predicted Along Your route</i>");
-        }
-        if(data.weather[0].description === "clear sky"){
-            $("#weather").html("<i class='fas fa-cloud'>        Warning! Hail Reported at Your Destination!</i>");
+        // if(data.weather[0].main === "Rain"){
+        //     $("#weather").html("<i class='fas fa-cloud'>        Hazardous Weather Predicted Along Your route</i>");
+        // }
+        // if(data.weather[0].description === "clear sky"){
+        //     $("#weather").html("<i class='fas fa-cloud'>        Warning! Hail Reported at Your Destination!</i>");
         
+        // }
+        if(data.sys.country === "US"){
+            $("#weather").html("<i class='fas fa-cloud'>        Warning! Hail Reported in your Vicinity!</i>");
         }
     });
 
