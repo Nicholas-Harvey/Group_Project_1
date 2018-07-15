@@ -47,45 +47,29 @@
                 </div>
                 </nav>
 
-            <div id="button-div">
-                <button type="button" class="btn btn-secondary" id="submit">Report</button>
-            </div>
+                <div class="container">
+                            <div class="card methodology">
+                                <h4 class="card-title">Mapping</h4>
+                                <p class="card-text">Calling on the Google Maps API, speedtrApp makes use of Google's heatmap datalayer to display precise coordinates for reported incidents Our heatmap allows users to gauge traffic congestion.</p>
+                            </div>
 
-            <div id="floating-panel">
-                <button onclick="toggleHeatmap()" class="btn btn-outline-dark">Show Reports</button>
-            </div>
+                            <div class="card methodology">
+                                <h4 class="card-title">Geolocation</h4>
+                                <p class="card-text">By collecting information about a user's location, speedTrapp can tell where you are and which direction your headed to give you only alerts that are pertinent to your route.</p>
+                            </div>
 
-            <div id="googleMap"></div>
+                            <div class="card methodology">
+                                <h4 class="card-title">Warning System</h4>
+                                <p class="card-text">Our up-to-date warning flags, user-generated for user use, are designed to only flag traffic issues where they exist now. The system is designed to let aging data expire.</p>
+                            </div>
+                </div>
 
-            <div class="card" id="warning-card">
-                <img class="card-img-top" src="https://www.solidbackgrounds.com/images/2048x1536/2048x1536-tomato-solid-color-background.jpg" alt="monocolor background">
-                <h4 class="card-title">Recently Discovered</h4>
-                <p class="card-text">
-                    <ul>
-                        <h5 id="speeding"><i class="fas fa-tachometer-alt"></i></li>
-                        <br>
-                        <h5 id="construction"><i class='fas fa-wrench'></i></li>
-                        <br>
-                        <h5 id="traffic"><i class='fa fa-car'></i></li>
-                        <br>
-                        <h5 id="entering-town"><i class='fas fa-building'></i></li>
-                        <br>
-                        <h5 id="weather"><i class='fas fa-cloud'></i></li>
-                        <br>
-                    </ul>
-                </p>
-            </div>
+                <hr>
 
-            <div class="info card">
-                <p>Road Condition</p>
-                <p id="ping"></p>
-            </div>
-
-            <div class="info card">
-                <p>Direction</p>
-                <p id="direction"></p>
-            </div>
-
+                <div class="jumbotron" id="methodology-jumbo">
+                    <h5 class="display-5">Interested in learning more?</h3>
+                    <a class="btn btn-success" href="#">Look at the Code</a>
+                </div>
             <!--jQuery-->
             <script
             src="https://code.jquery.com/jquery-3.3.1.js"
@@ -95,24 +79,6 @@
             <!--Bootstrap-->
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
-            <!--Google Firebase-->
-            <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-
-
-            <!--Moment jS-->
-
-            <!--Custom files-->
-            <script src="mapLogic.js"></script>
-
-            <script src="logic.js"></script>
-
-            <!--Google maps API-->
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYzoIRl5Tr3t23pkaQYWe2KVKYO0FE4ck&callback=initMap&libraries=visualization"
-            async defer></script>
-
-            <!--<script src="generalProximityAlert.js"></script>-->
-
-            <!--<script>"api.openweathermap.org/data/2.5/forecast?lat=35&lon=139"</script>-->
-
     </body>
 </html>
+

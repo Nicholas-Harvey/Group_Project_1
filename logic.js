@@ -1,15 +1,16 @@
 var coordinateArray = [];
 
-database.ref().on("child_added", function(results) {
-    //console.log(results.val().lat);
-    //console.log(results.val().lng);
-    var coordObject = {
-        xCoordinate: results.val().lat,
-        yCoordinate: results.val().lng
-    };
-    coordinateArray.push(coordObject); 
-});
+// database.ref().on("child_added", function(results) {
+//     //console.log(results.val().lat);
+//     //console.log(results.val().lng);
+//     var coordObject = {
+//         xCoordinate: results.val().lat,
+//         yCoordinate: results.val().lng
+//     };
+//     coordinateArray.push(coordObject); 
+// });
 
+//console.log("logic.js is trying to read:", coordinateArray);
     
     function getLocation() {
     
@@ -26,8 +27,8 @@ database.ref().on("child_added", function(results) {
     //With map coordinates, the third decimal point measures a distance of 0.068 miles.
     //The functions are called every ten seconds. Therefore, the user must be traveling at least 0.068 miles every ten seconds, or about 24 miles per hour. 
     function showPosition(position) {
-        $("#location").html("Latitude: " + "<span id='xPos'>" + position.coords.latitude.toFixed(5) + "</span>" +
-            "<br>Longitude: " + "<span id='yPos'>" + position.coords.longitude.toFixed(5) + "</span>");
+        $("#location").html("Latitude: " + "<span id='xPos'>" + position.coords.longitude.toFixed(4) + "</span>" +
+            "<br>Longitude: " + "<span id='yPos'>" + position.coords.latitude.toFixed(4) + "</span>");
         //console.log("test");
     };
     
@@ -91,43 +92,27 @@ database.ref().on("child_added", function(results) {
     var direction;
     
     function currentDirection() {
-    
+        var oli = $("<h4>");
         if ((newX < oldX) && (newY === oldY)) {
-            direction = "east";
-            $("#direction").html(direction);
-            console.log(direction);
+            direction = "E";
+            $(oli).text(direction);
+            $("#direction").append(oli);
         } else if ((newX > oldX) && (newY === oldY)) {
-            direction = "west";
-            $("#direction").html(direction);
-            console.log(direction);
+            direction = "W";
+            $(oli).text(direction);
+            $("#direction").append(oli);
         } else if ((newX === oldX) && (newY > oldY)) {
-            direction = "north";
-            $("#direction").html(direction);
-            console.log(direction);
+            direction = "N";
+            $(oli).text(direction);
+            $("#direction").append(oli);
         } else if ((newX === oldX) && (newY < oldY)) {
-            direction = "south";
-            $("#direction").html(direction);
-            console.log(direction);
-        } else if ((newX < oldX) && (newY > oldY)) {
-            direction = "northeast";
-            $("#direction").html(direction);
-            console.log(direction);
-        } else if ((newX < oldX) && (newY < oldY)) {
-            direction = "southeast";
-            $("#direction").html(direction);
-            console.log(direction);
-        } else if ((newX > oldX) && (newY < oldY)) {
-            direction = "southwest";
-            $("#direction").html(direction);
-            console.log(direction);
-        } else if ((newX > oldX) && (newY > oldY)) {
-            direction = "northwest";
-            $("#direction").html(direction);
-            console.log(direction);
+            direction = "S";
+            $(oli).text(direction);
+            $("#direction").append(oli);
         } else {
-            direction = "Position has not changed"
-            $("#direction").html(direction);
-            console.log(direction);
+            direction = "--"
+            $(oli).text(direction);
+            $("#direction").append(oli);
         }
     }
     
@@ -137,10 +122,53 @@ database.ref().on("child_added", function(results) {
     //through an array of coordinates. The for-loop functon can be called using a setInterval.
     
     //console.log(coordinateArray);
+
+var increment = 0;
+var alertSound = new Audio('167337__willy-ineedthatapp-com__pup-alert.mp3');
+
+//Create radius takes y coordinates and x coordinates from Firebase...
+function createRadius(x, y){
+        //Watches your location...
+        navigator.geolocation.getCurrentPosition(function(position){
+            var currentLat = position.coords.latitude;
+            var currentLng = position.coords.longitude;
+            //Creates a ~three mile radius...
+            var latPlus = x + .00001;
+            var latMinus = x - .00001;
+            var lngPlus = y + .00001;
+            var lngMinus = y - .00001;
+            //And lets you know if you stray into that radius.
+            if (currentLat > latMinus && currentLat < latPlus) {
+                //console.log("Your latitude is proximal to a danger zone.")
+                increment = increment + 1;
+            } else if (currentLng > lngMinus && currentLng < lngPlus) {
+                increment = increment + 1;
+                //console.log("Your longitude is proximal to a danger zone.")
+            } 
+            //console.log("You are proximal to", increment, "ping(s).");
+            $("#ping").text(increment);
+            if (increment > 0) {
+                alertSound.play();
+            }
+        });
+}
+
+//Referencing Firebase and pushing lat lng values to the coordinate array. 
+    database.ref().on("child_added", function(results) {
+        var xVal = results.val().lat;
+        var yVal = results.val().lng;
+        var coordObject = {
+            xCoordinate: xVal,
+            yCoordinate: yVal
+        };
+        coordinateArray.push(coordObject); 
+        // createRadius(xVal, yVal);
+    });
+
+
     
     function proximityCheck() {
         for (i = 0; i <= coordinateArray.length; i++) {
-    
             if ((direction === "north") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.001))) && (newX === coordinateArray[i].xCoordinate)) {
                 playAlert();
             } else if ((direction === "south") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.001))) && (newX === coordinateArray[i].xCoordinate)) {
@@ -161,14 +189,14 @@ database.ref().on("child_added", function(results) {
         }
     }
 
-    var iteration = 0;
+    console.log(coordinateArray);
     
     setInterval(function () {
-        iteration = iteration+1;
-        console.log("You are on iteration", iteration);
         newValues();
         currentDirection();
-        proximityCheck();
+        for (var j = 0; j < coordinateArray.length; j++) {
+            createRadius(coordinateArray[j].xCoordinate, coordinateArray[j].yCoordinate);
+        }
+        //console.log("Pings close to your location: ", increment);
+        increment = 0;
     }, 3000);
-
-
