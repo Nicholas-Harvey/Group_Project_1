@@ -1,29 +1,49 @@
 var coordinateArray = [
-{
-    name: "westminsterStation",
-    xCoordinate: 39.82,
-    yCoordinate: -105.02
-},    
-{
-    name: "denverUnionStation",
-    xCoordinate: 39.75,
-    yCoordinate: -105.00
-}, 
-{
-    name: "policeStation",
-    xCoordinate: 39.68,
-    yCoordinate: -104.96
-},
-{
-    name: "chamberlinObservatory",
-    xCoordinate: 39.67,
-    yCoordinate: -104.96
-},
-{
-    name: "104th84th",
-    xCoordinate: 39.846732,
-    yCoordinate: -104.984662
-}
+    {
+        objectName: "Miners Museum",
+        objectLatitude: 39.99,
+        objectLongitude: -105.08
+    },
+    {
+        objectName: "Dairy Queen Lafayette",
+        objectLatitude: 40.01,
+        objectLongitude: -105.10
+    },
+    {
+        objectName: "Home",
+        objectLatitude: 39.98,
+        objectLongitude: -104.71
+    },
+    {
+        objectName: "Illegal Petes DU",
+        objectLatitude: 39.67,
+        objectLongitude: -104.96
+    },
+    {
+        objectName: "Westminster Station",
+        objectLatitude: 39.82,
+        objectLongitude: -105.02
+    },
+    {
+        objectName: "Denver Union Station",
+        objectLatitude: 39.75,
+        objectLongitude: -105.00
+    },
+    {
+        objectName: "Police Station",
+        objectLatitude: 39.68,
+        objectLongitude: -104.96
+    },
+    {
+        objectName: "Chamberlin Observatory",
+        objectLatitude: 39.67,
+        objectLongitude: -104.96
+    },
+    {
+        objectName: "104th & 84th",
+        objectLatitude: 39.84,
+        objectLongitude: -104.98
+    }
 ];
 
 function getLocation() {
@@ -41,32 +61,32 @@ function getLocation() {
 //With map coordinates, the third decimal point measures a distance of 0.068 miles.
 //The functions are called every ten seconds. Therefore, the user must be traveling at least 0.068 miles every ten seconds, or about 24 miles per hour. 
 function showPosition(position) {
-    $("#location").html("Latitude: " + "<span id='xPos'>" + position.coords.latitude.toFixed(3) + "</span>" +
-        "<br>Longitude: " + "<span id='yPos'>" + position.coords.longitude.toFixed(3) + "</span>");
+    $("#location").html("Latitude: " + "<span id='latitudeSpan'>" + position.coords.latitude + "</span>" +
+        "<br>Longitude: " + "<span id='longitudeSpan'>" + position.coords.longitude + "</span>");
     console.log("test");
 };
 
 getLocation();
 
-var newX = $("#xPos").html();
-console.log("newX is " + newX);
-var oldX;
-var newY = $("#yPos").html();
-console.log("newY is " + newY);
-var oldY;
+var newLatitude = $("#latitudeSpan").html();
+console.log("New Latitude is " + newLatitude);
+var oldLatitude;
+var newLongitude = $("#longitudeSpan").html();
+console.log("New longitude is " + newLongitude);
+var oldLongitude;
 
 function newValues() {
 
     $("#direction").html("");
 
-    oldX = newX;
-    console.log("oldX is " + oldX);
-    newX = $("#xPos").html();
-    console.log("newX is " + newX);
-    oldY = newY;
-    console.log("oldY is " + oldY);
-    newY = $("#yPos").html();
-    console.log("newY is " + newY);
+    oldLatitude = newLatitude;
+    console.log("Old Latitude is " + oldLatitude);
+    newLatitude = $("#latitudeSpan").html();
+    console.log("New latitude is " + newLatitude);
+    oldLongitude = newLongitude;
+    console.log("Old longitude is " + oldLongitude);
+    newLongitude = $("#longitudeSpan").html();
+    console.log("New longitude is " + newLongitude);
 
 };
 
@@ -75,72 +95,76 @@ var alertSound = new Audio('assets/audio/167337__willy-ineedthatapp-com__pup-ale
 
 $("#playAlert").on("click", function () {
 
-    alert();
+    playAlert();
 
 });
 
 //This code is used to 'snooze' the proximity alert, by checking the value of a counter variable
 
-    var counter = 0;
-    console.log("counter value is: " + counter);
+var counter = 0;
+console.log("counter value is: " + counter);
 
-    function resetCounter() {
-        counter = 0;
-        console.log("resetCounter has been called");
-    };
+function resetCounter() {
+    counter = 0;
+    console.log("resetCounter has been called");
+};
 
-    function alert() {
-        if (counter === 0) {
-                counter = 1;
-                console.log("Counter value is now: " + counter);
-                alertSound.play();
-                console.log("Alert sound has been played");
-                setTimeout(resetCounter, 60000);
-                console.log("Counter reset timer has been set");
-            } else if (counter === 1) {
-                console.log("Alert is on snooze");
-            }
-    };
+function playAlert() {
+    if (counter === 0) {
+        counter = 1;
+        console.log("Counter value is now: " + counter);
+        alertSound.play();
+       
+        console.log("Alert sound has been played");
+        setTimeout(resetCounter, 60000);
+        console.log("Counter reset timer has been set");
+    } else if (counter === 1) {
+        console.log("Alert is on snooze");
+    }
+};
 
 //oldX is the x-coordinate from an old position, newX is the updated value. Ditto for oldY and newY
 var direction;
 
+//LONGITUDE is x
+//Latitude is y
+
 function currentDirection() {
 
-    if ((newX > oldX) && (newY === oldY)) {
+    if ((newLongitude < oldLongitude) && (newLatitude === oldLatitude)) {
         direction = "east";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX < oldX) && (newY === oldY)) {
+    } else if ((newLongitude > oldLongitude) && (newLatitude === oldLatitude)) {
         direction = "west";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX === oldX) && (newY > oldY)) {
+    } else if ((newLongitude === oldLongitude) && (newLatitude > oldLatitude)) {
         direction = "north";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX === oldX) && (newY < oldY)) {
+    } else if ((newLongitude === oldLongitude) && (newLatitude < oldLatitude)) {
         direction = "south";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX > oldX) && (newY > oldY)) {
+    } else if ((newLongitude < oldLongitude) && (newLatitude > oldLatitude)) {
         direction = "northeast";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX > oldX) && (newY < oldY)) {
+    } else if ((newLongitude < oldLongitude) && (newLatitude < oldLatitude)) {
         direction = "southeast";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX < oldX) && (newY < oldY)) {
+    } else if ((newLongitude > oldLongitude) && (newLatitude < oldLatitude)) {
         direction = "southwest";
         $("#direction").html(direction);
         console.log(direction);
-    } else if ((newX < oldX) && (newY > oldY)) {
+    } else if ((newLongitude > newLongitude) && (newLatitude > oldLatitude)) {
         direction = "northwest";
         $("#direction").html(direction);
         console.log(direction);
     } else {
-        direction = "Position has not changed"
+        direction = "Position has not substantially changed"
         $("#direction").html(direction);
         console.log(direction);
     }
@@ -152,25 +176,63 @@ function currentDirection() {
 //through an array of coordinates. The for-loop functon can be called using a setInterval.
 
 function proximityCheck() {
-    for (i = 0; i <= coordinateArray.length; i++) {
+    for (var i = 0; i < coordinateArray.length; i++) {
 
-        if ((direction === "north") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
-            alert();
-        } else if ((direction === "south") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
-            alert();
-        } else if ((direction === "west") && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01))) && (newX === coordinateArray[i].xCoordinate)) {
-            alert();
-        } else if ((direction === "east") && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01))) && (newY === coordinateArray[i].yCoordinate)) {
-            alert();
-        } else if ((direction === "northeast") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01)))) {
-            alert();
-        } else if ((direction === "southeast") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && ((newX < coordinateArray[i].xCoordinate) && (newX > (coordinateArray[i].xCoordinate - 0.01)))) {
-            alert();
-        } else if ((direction === "southwest") && ((newY > coordinateArray[i].yCoordinate) && (newY < (coordinateArray[i].yCoordinate + 0.01))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01)))) {
-            alert();
-        } else if ((direction === "northwest") && ((newY < coordinateArray[i].yCoordinate) && (newY > (coordinateArray[i].yCoordinate - 0.01))) && ((newX > coordinateArray[i].xCoordinate) && (newX < (coordinateArray[i].xCoordinate + 0.01)))) {
-            alert();
+        //console.log(coordinateArray[i].objectName);
+
+        if (((newLatitude < coordinateArray[i].objectLatitude) && (newLatitude > (coordinateArray[i].objectLatitude - 0.01))) && (newLongitude === coordinateArray[i].objectLongitude)) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLatitude > coordinateArray[i].objectLatitude) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && (newLongitude === coordinateArray[i].objectLongitude)) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLongitude > coordinateArray[i].objectLongitude) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01))) && (newLatitude === coordinateArray[i].objectLatitude)) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLongitude < coordinateArray[i].objectLongitude) && (newLongitude > (coordinateArray[i].objectLongitude - 0.01))) && (newLatitude === coordinateArray[i].objectLatitude)) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLatitude < coordinateArray[i].objectLatitude) && (newLatitude > (coordinateArray[i].objectLatitude - 0.01))) && ((newLongitude < coordinateArray[i].objectLongitude) && (newLongitude > (coordinateArray[i].objectLongitude - 0.01)))) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLatitude > coordinateArray[i].objectLatitude) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && ((newLongitude < coordinateArray[i].objectLongitude) && (newLongitude > (coordinateArray[i].objectLongitude - 0.01)))) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLatitude > coordinateArray[i].objectLatitude) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && ((newLongitude > coordinateArray[i].objectLongitude) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01)))) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else if (((newLatitude < coordinateArray[i].objectLatitude) && (newLatitude > (coordinateArray[i].objectLatitude - 0.01))) && ((newLongitude > coordinateArray[i].objectLongitude) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01)))) {
+            playAlert();
+            console.log("Yeah, baby!");
+            console.log(coordinateArray[i].objectName);
+            $("#location-two").html(coordinateArray[i].objectName);
+        } else {
+            $("#location-three").html("You are not near any of the coordinates.");
+            console.log("Sorry, Charlie");
         }
+        /* else if (((newLatitude > (coordinateArray[i].objectLatitude - 0.01)) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && ((newLongitude > (coordinateArray[i].objectLongitude - 0.01)) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01)))) {
+            playAlert();
+            console.log("Yeah, baby!");
+            $("#direction-two").html(coordinateArray[i].objectName);
+        } else if ((newLatitude === coordinateArray[i].objectLatitude) && (newLongitude === coordinateArray[i].objectLongitude)) {
+            playAlert();
+            console.log("Yeah, baby!");
+            $("#direction-two").html(coordinateArray[i].objectName);
+        } */
 
     }
 }
@@ -180,4 +242,3 @@ setInterval(function () {
     currentDirection();
     proximityCheck();
 }, 10000);
-
