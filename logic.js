@@ -56,10 +56,6 @@ function getLocation() {
     }
 }
 
-//The app has a minimum driving speed to function. This minimum speed is defined by the precision of coordinate measurement, and how many times the 
-//function is called. 
-//With map coordinates, the third decimal point measures a distance of 0.068 miles.
-//The functions are called every ten seconds. Therefore, the user must be traveling at least 0.068 miles every ten seconds, or about 24 miles per hour. 
 function showPosition(position) {
     $("#location").html("Latitude: " + "<span id='latitudeSpan'>" + position.coords.latitude + "</span>" +
         "<br>Longitude: " + "<span id='longitudeSpan'>" + position.coords.longitude + "</span>");
@@ -124,10 +120,8 @@ function playAlert() {
 };
 
 //oldX is the x-coordinate from an old position, newX is the updated value. Ditto for oldY and newY
-var direction;
 
-//LONGITUDE is x
-//Latitude is y
+var direction;
 
 function currentDirection() {
 
@@ -182,58 +176,37 @@ function proximityCheck() {
 
         if (((newLatitude < coordinateArray[i].objectLatitude) && (newLatitude > (coordinateArray[i].objectLatitude - 0.01))) && (newLongitude === coordinateArray[i].objectLongitude)) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLatitude > coordinateArray[i].objectLatitude) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && (newLongitude === coordinateArray[i].objectLongitude)) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLongitude > coordinateArray[i].objectLongitude) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01))) && (newLatitude === coordinateArray[i].objectLatitude)) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLongitude < coordinateArray[i].objectLongitude) && (newLongitude > (coordinateArray[i].objectLongitude - 0.01))) && (newLatitude === coordinateArray[i].objectLatitude)) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLatitude < coordinateArray[i].objectLatitude) && (newLatitude > (coordinateArray[i].objectLatitude - 0.01))) && ((newLongitude < coordinateArray[i].objectLongitude) && (newLongitude > (coordinateArray[i].objectLongitude - 0.01)))) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLatitude > coordinateArray[i].objectLatitude) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && ((newLongitude < coordinateArray[i].objectLongitude) && (newLongitude > (coordinateArray[i].objectLongitude - 0.01)))) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLatitude > coordinateArray[i].objectLatitude) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && ((newLongitude > coordinateArray[i].objectLongitude) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01)))) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
         } else if (((newLatitude < coordinateArray[i].objectLatitude) && (newLatitude > (coordinateArray[i].objectLatitude - 0.01))) && ((newLongitude > coordinateArray[i].objectLongitude) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01)))) {
             playAlert();
-            console.log("Yeah, baby!");
             console.log(coordinateArray[i].objectName);
             $("#location-two").html(coordinateArray[i].objectName);
-        } else {
-            $("#location-three").html("You are not near any of the coordinates.");
-            console.log("Sorry, Charlie");
-        }
-        /* else if (((newLatitude > (coordinateArray[i].objectLatitude - 0.01)) && (newLatitude < (coordinateArray[i].objectLatitude + 0.01))) && ((newLongitude > (coordinateArray[i].objectLongitude - 0.01)) && (newLongitude < (coordinateArray[i].objectLongitude + 0.01)))) {
-            playAlert();
-            console.log("Yeah, baby!");
-            $("#direction-two").html(coordinateArray[i].objectName);
-        } else if ((newLatitude === coordinateArray[i].objectLatitude) && (newLongitude === coordinateArray[i].objectLongitude)) {
-            playAlert();
-            console.log("Yeah, baby!");
-            $("#direction-two").html(coordinateArray[i].objectName);
-        } */
-
+        } 
     }
 }
 
